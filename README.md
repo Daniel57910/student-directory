@@ -1,1 +1,1 @@
-For Pushing# student-directory
+# student-directory
