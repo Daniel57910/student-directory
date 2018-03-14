@@ -5,8 +5,9 @@ def print_header
 end
 
 def print_students(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  students.each_with_index do |student, i|
+    #calls enumerator, 1st enum object 2nd enum index
+    puts "#{i + 1}. #{student[:name]} (#{student[:cohort]} cohort)" if student[:name].length < 12 and student[:name].chr == "D"
     #selects specific value in hash
   end
 end
