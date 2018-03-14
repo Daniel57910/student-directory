@@ -1,3 +1,16 @@
+def print_header
+  puts "The students of Villians Academy"
+  puts "-----------------"
+end
+
+def print_students(students)
+  students.map { |student| puts student }
+end
+
+def print_footer(students)
+  puts "Overall, we have #{students.count} great students"
+end
+
 students = [
     "Dr. Hannibal Lecter",
     "Darth Vader",
@@ -12,7 +25,7 @@ students = [
     "Norman Bates"
 ]
 
-puts "The students of Villians Academy"
-puts "-----------------"
-students.map{ |student| puts student }
-puts "Overall, we have #{students.count} great students"
+
+print_header
+print_students(students)
+print_footer(students)
