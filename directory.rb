@@ -49,6 +49,8 @@ end
 
 def input_students
 
+  count = 0
+
   students = []
   puts "Please enter the following student information"
   puts "To finish, just hit return twice"
@@ -68,9 +70,12 @@ def input_students
     puts "Enter your hobbies"
     hobbs = gets.chomp
     students << {name: name, cohort: cohort, height: height, age: age, hobbs: hobbs}
-    #name: name of hash key, :november symbol/static that immutable
-    puts "Now we have #{students.count} students"
-    name = gets.chomp
+    if count == 0
+      puts "Now we have #{students.count} student"
+    else
+      puts "Now we have #{students.count} students"
+    end
+    count += 1
   end
 
   students
