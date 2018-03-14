@@ -5,10 +5,13 @@ def print_header
 end
 
 def print_students(students)
-  students.each_with_index do |student, i|
-    #calls enumerator, 1st enum object 2nd enum index
-    puts "#{i + 1}. #{student[:name]} (#{student[:cohort]} cohort)" if student[:name].length < 12 and student[:name].chr == "D"
-    #selects specific value in hash
+  i = 0
+  while i < students.length
+    current = students[i]
+    if current[:name].length < 12 and current[:name].chr == "D"
+      puts "#{i + 1}. #{current[:name]} (#{current[:cohort]} cohort)"
+    end 
+    i +=1
   end
 end
 
