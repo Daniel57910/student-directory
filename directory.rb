@@ -1,4 +1,7 @@
 
+TBD = "TBD"
+CORRECT = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "Noveber", "December"]
+
 def print_header
   puts "The students of Villians Academy"
   puts "-----------------"
@@ -9,6 +12,20 @@ def print_wrap(current, i)
 
   info.center(info.length + 5)
   #center > than length of string or string returned
+end
+
+def correct_cohort(cohort)
+
+  cohort = TBD if cohort.empty?
+
+  loop do 
+    break if CORRECT.include?(cohort.capitalize) or cohort == TBD
+    puts "Enter a correct month"
+    cohort = gets.chomp
+  end
+
+  cohort
+
 end
 
 def print_students(students)
@@ -38,14 +55,13 @@ def input_students
     name = gets.chomp
     puts "Enter the cohort"
     cohort = gets.chomp
+    cohort = correct_cohort(cohort)
     puts "Enter your height"
     height = gets.chomp
     puts "Enter your age"
     age = gets.chomp
     puts "Enter your hobbies"
     hobbs = gets.chomp
-
-
     students << {name: name, cohort: cohort, height: height, age: age, hobbs: hobbs}
     #name: name of hash key, :november symbol/static that immutable
     puts "Now we have #{students.count} students"
