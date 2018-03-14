@@ -1,11 +1,14 @@
+
 def print_header
   puts "The students of Villians Academy"
   puts "-----------------"
 end
 
 def print_students(students)
-  students.map { |student, month| puts "#{student} (#{month} cohort)" }
-  #each enumerable represents row in array
+  students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    #selects specific value in hash
+  end
 end
 
 def print_footer(students)
@@ -13,20 +16,26 @@ def print_footer(students)
   #count enumerable unlike length, eg count array for names beginning in "T"
 end
 
-students = [
-  ["Dr. Hannibal Lecter", :november],
-  ["Darth Vader", :november],
-  ["Nurse Ratched", :november],
-  ["Michael Corleone", :november],
-  ["Alex DeLarge", :november],
-  ["The Wicked Witch of the West", :november],
-  ["Terminator", :november],
-  ["Freddy Krueger", :november],
-  ["The Joker", :november],
-  ["Joffrey Baratheon", :november],
-  ["Norman Bates", :november]
-]
+def input_students
 
+  students = []
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
+
+  name = gets.chomp
+
+  until name.empty? 
+    students << {name: name, cohort: :november}
+    #name: name of hash key, :november symbol/static that immutable
+    puts "Now we have #{students.count} students"
+    name = gets.chomp
+  end
+
+  students
+
+end
+
+students = input_students
 print_header
 print_students(students)
 print_footer(students)
