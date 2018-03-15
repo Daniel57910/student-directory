@@ -87,26 +87,44 @@ def input_students
   @students
 end
 
+#method for saving student data to file
 def save_students
-
-file = File.open("cases.csv", "w")
-#writes data to cases.csv file
-
+  file = File.open("students.csv", "w")
+  #2nd argument file access mode. writes data to cases.csv file
   @students.each do |student|
-    data = student
-    csv_line = student.to_a.join(",")
+    data = student[:name], student[:cohort], student[:height], student[:age], student[:hobbs]
+    #saves each value at corresponding hash to data as array, then joins so all one row
+    csv_line = data.join(",")
     file.puts csv_line
     #saves data to each csv line/row of file
   end
-  file.close
 
+  file.close
 end
+
+def load_students
+  file  = File.open("students.csv", "r")
+  #writes data to file
+  file.readlines.each do | line |
+    name, cohort, height, age, hobbs = line.chomp.split(",")
+    #parralel assignment, splits each element into individual variables
+    puts "#{name}, #{cohort}, #{height}, #{age}, #{hobbs}"
+    @students << {name: name, cohort: cohort, height: height, age: age, hobbs: hobbs}
+    #array of hashes, with keys pointing to values obtained by parralel assignment
+  end
+  file.close
+end
+
+
+
 #driver method for getting information
 def interactive_menu
   puts "here is the menu for the student directory"
   loop do
     puts "1: input student information"
     puts "2: show student information"
+    puts "3: Save the list to students.csv"
+    puts "4: Load the list from sutdents.csv"
     puts "9: exit the program"
     selection = gets.chomp
     case selection
@@ -116,8 +134,11 @@ def interactive_menu
       when "2"
         print_header
         print_students
-      when "9"
+      when "3"
         save_students
+      when '4'
+        load_students
+      when "9"
         print_footer
       else
         puts "I don't know what you mean, try again"
