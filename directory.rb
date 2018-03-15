@@ -26,13 +26,13 @@ end
 #method for ensuring correct cohort entered
 def correct_cohort(cohort)
 
-  cohort = gets.chomp
+  cohort = STDIN.gets.chomp
   cohort = TBD if cohort.empty?
 
   loop do 
     break if CORRECT.include?(cohort.capitalize) or cohort == TBD
     puts "Enter a correct month"
-    cohort = gets.chomp
+    cohort = STDIN.gets.chomp
   end
 
   cohort
@@ -65,16 +65,16 @@ def input_students
 
   loop do
     puts "Enter the name"
-    name = gets.chomp
+    name = STDIN.gets.chomp
     break if name.empty?
     puts "Enter the cohort"
     cohort = correct_cohort(cohort)
     puts "Enter your height"
-    height = gets.chomp
+    height = STDIN.gets.chomp
     puts "Enter your age"
-    age = gets.chomp
+    age = STDIN.gets.chomp
     puts "Enter your hobbies"
-    hobbs = gets.chomp
+    hobbs = STDIN.gets.chomp
     @students << {name: name, cohort: cohort, height: height, age: age, hobbs: hobbs}
     if count == 0
       puts "Now we have #{@students.count} student"
@@ -102,8 +102,24 @@ def save_students
   file.close
 end
 
-def load_students
-  file  = File.open("students.csv", "r")
+#method for determining whether file present
+def try_load_students
+  filename = ARGV.first
+  #takes first argument from command line
+  return if filename.nil?
+  #exits method if no argument passed
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} dosen't exist"
+    exit #exits program if no file present, break exits method
+  end
+end
+
+#method for loading data from file
+def load_students(filename = "students.csv")
+  file  = File.open(filename, "r")
   #writes data to file
   file.readlines.each do | line |
     name, cohort, height, age, hobbs = line.chomp.split(",")
@@ -115,8 +131,6 @@ def load_students
   file.close
 end
 
-
-
 #driver method for getting information
 def interactive_menu
   puts "here is the menu for the student directory"
@@ -124,9 +138,9 @@ def interactive_menu
     puts "1: input student information"
     puts "2: show student information"
     puts "3: Save the list to students.csv"
-    puts "4: Load the list from sutdents.csv"
+    puts "4: Load the list from students.csv"
     puts "9: exit the program"
-    selection = gets.chomp
+    selection = STDIN.gets.chomp
     case selection
       when "1"
         @students = input_students
@@ -137,7 +151,7 @@ def interactive_menu
       when "3"
         save_students
       when '4'
-        load_students
+        try_load_students
       when "9"
         print_footer
       else
